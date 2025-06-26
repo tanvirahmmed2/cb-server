@@ -1,13 +1,14 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import React from 'react'
+import NavBar from './Component/NavBar'
+import UseEffect from './Component/UseEffect'
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
-    <>
-    Hello
-    </>
+    <div className='w-full overflow-x-hidden'>
+      <NavBar title="WebPage" />
+
+      <UseEffect/>
+    </div>
   )
 }
 
