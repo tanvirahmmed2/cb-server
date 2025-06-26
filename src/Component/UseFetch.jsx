@@ -14,7 +14,6 @@ const UseFetch = (url) => {
                         throw Error(" todos are not loading, try later");
 
                     } else {
-
                         return res.json();
                     }
                 })

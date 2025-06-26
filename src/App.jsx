@@ -1,12 +1,13 @@
 import React from 'react'
 import NavBar from './Component/NavBar'
-import DataFetch from './Component/DataFetch'
+import ToastMasg from './Component/ToastMasg'
+import FetchData from './Component/Test/FetchData'
 function App() {
 
   return (
     <div className='w-full overflow-x-hidden'>
       <NavBar title="WebPage" />
-      <DataFetch />
+     <FetchData/>
     </div>
   )
 }
