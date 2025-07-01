@@ -1,51 +1,70 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react'
+import Countries from './Component/Country/Countries';
+import Search from './Component/Country/Search';
 
-const url = "https://restcountries.com/v3.1/all";
 
-function App() {
-  const [loading, setLoading] = useState(true);
-  const [countries, setCountries] = useState([]);
-  const [error, setError] = useState(false);
+const url = "https://restcountries.com/v3.1/all?fields=name,capital,region,population,flags,cca3";
 
-  const fetchData = async () => {
+
+
+const App = () => {
+  const [countries, setCountries] = useState([])
+  const [filteredcountries, setFilteredCountries] = useState(countries)
+  const [isloading, setIsLoading] = useState(true)
+  const [error, setError] = useState("")
+
+
+
+  const fetchdata = async () => {
     try {
       const response = await fetch(url);
       const data = await response.json();
-      if (Array.isArray(data)) {
-        setCountries(data);
-        setError(false);
-      } else {
-        throw new Error("Invalid response");
-      }
+      setCountries(data)
+      setFilteredCountries(data)
+      setError(false)
+      setIsLoading(false)
+      console.log(data);
+
     } catch (error) {
-      console.error("Error fetching countries:", error);
-      setError(true);
-    } finally {
-      setLoading(false);
+      setError(error)
+      setIsLoading(false)
     }
-  };
+
+
+  }
+  const errormasg = "failed fetching data"
+  const loadingmasg = "loading info......"
 
   useEffect(() => {
-    // 👇 Optional delay for demo effect, remove for real apps
-    setTimeout(() => {
-      fetchData();
-    }, 3000);
-  }, []);
+    fetchdata()
 
+
+  }, [])
+  const handleRemoveCountry=(name)=>{
+    const  filter= filteredcountries.filter((country)=>
+      country.name.common !== name
+    );
+    setFilteredCountries(filter)
+  }
+
+  const handleSearch=(searchvalue)=>{
+    let value= searchvalue.toLowerCase()
+    const newcountries= countries.filter((country)=>{
+      const countryname= country.name.common.toLowerCase();
+      return countryname.startsWith(value)
+    })
+    setFilteredCountries(newcountries)
+  }
   return (
-    <div className='w-full overflow-x-hidden px-4 py-6'>
-      <h1 className="text-2xl font-bold mb-4">Country List</h1>
+    <div className='w-full flex flex-col items-center justify-center h-auto'>
+      <h1 className='text-5xl w-full text-center mb-4'>Country:</h1>
+      <Search onSearch={handleSearch}/>
+      {isloading && <h1>{loadingmasg} </h1>}
+      {error && <h1>{errormasg}</h1>}
+      {countries && <Countries countries={filteredcountries} onRemove={handleRemoveCountry} />}
 
-      {loading && <h1 className="text-blue-500">Loading...</h1>}
-      {error && <h1 className="text-red-600">Fetching problem</h1>}
-
-      {!loading && !error && countries.map((country) => (
-        <div key={country.cca3} className="mb-4 border-b pb-2">
-          <h2 className="text-lg font-medium">{country.name.common}</h2>
-        </div>
-      ))}
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
