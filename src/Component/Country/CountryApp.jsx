@@ -68,7 +68,7 @@ const CountryApp = () => {
 
   return (
     <div className='w-full flex flex-col items-center justify-center h-auto'>
-      <h1 className='text-5xl w-full text-center mb-4'>Country:</h1>
+      <h1 className='text-5xl w-full text-center mb-4'>Country List:</h1>
       <Search onSearch={handleSearch} onsort={handlesort} />
       {isloading && <h1>{loadingmasg} </h1>}
       {error && <h1>{errormasg}</h1>}
