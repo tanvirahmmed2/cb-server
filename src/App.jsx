@@ -1,10 +1,12 @@
 import React from 'react'
-import CountryApp from './Component/Country/CountryApp'
+import Index from './Component/Redux/Index'
+
+
 
 const App = () => {
   return (
     <div>
-      <CountryApp/>
+      <Index/>
     </div>
   )
 }
