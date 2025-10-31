@@ -1,3 +1,8 @@
+const OpenAi= require('openai')
+const { OPENAI_API } = require('../config/secure')
+
+const openai= new OpenAi({apiKey: OPENAI_API})
+
 const sendPromt=async(req, res)=>{
     try {
         
